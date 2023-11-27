@@ -20,7 +20,7 @@ fn main() {
 
     let mutable_s1_part_2: &mut String = &mut s1; // now this is allowed as mutable_s1 is out of scope as it has been used for the last time above this line as it can be detected
 
-    println!("{}", mutable_s1_part_2);
+    println!("deferencing {}", *mutable_s1_part_2);
 
 
     println!("{}", lenght2);
