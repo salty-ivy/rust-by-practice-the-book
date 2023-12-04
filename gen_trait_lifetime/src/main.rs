@@ -70,6 +70,19 @@ fn use_trait_verbose_where<T, U>(t: &T, u: &U) -> Option<i32> where T: SumOfCoor
     None
 }
 
+// lifetimes to use the corelation between parameters and return value
+// life time annotation uses `'` and small lettered name afterwards like 'a
+// here return type now will have the lifetime validation as much as its parameter had
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str{
+    if x.len() > y.len(){
+        x
+    }
+    else{
+        y
+    }
+}
+
 
 
 
@@ -95,4 +108,14 @@ fn main() {
     let char_list = vec!['s', 'w', 'a', 'd', 'g', 'b'];
 
     let result = largest(&char_list);
+
+    // lifetime longest method concept potrayal
+
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    // println!("The longest string is {}", result);
 }
