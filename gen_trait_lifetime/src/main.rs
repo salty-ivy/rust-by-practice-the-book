@@ -7,6 +7,8 @@
 
 // trait for point
 
+use std::fmt::Display;
+
 
 trait DistanceFromOrigin{
     fn from_origin(&self) -> i32; // this methods needs to be implemented by any type that uses this trait on itself, also we can implement some default logic 
@@ -84,7 +86,48 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str{
 }
 
 
+/*
 
+lifttime elision rules.
+
+The first rule is that the compiler assigns a lifetime parameter to each parameter that’s a reference. In other words, a function with one parameter gets one lifetime parameter: fn foo<'a>(x: &'a i32); a function with two parameters gets two separate lifetime parameters: fn foo<'a, 'b>(x: &'a i32, y: &'b i32); and so on.
+
+The second rule is that, if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters: fn foo<'a>(x: &'a i32) -> &'a i32.
+
+The third rule is that, if there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all output lifetime parameters. This third rule makes methods much nicer to read and write because fewer symbols are necessary.
+
+*/
+
+// rule one, 'a is assigned automatically to i param
+// rule 2 is there's one param then lifetime of that param is assigned to output param 
+fn longest_rule_1_and_2(s: &str) -> &str{
+    &s[1..3]
+}
+
+// if rule 2 doesn't fit we specify explicitly
+fn longest_rule_2<'a, 'b>(s1: &'a str, s2: &'b str) -> Vec<&'b str>{
+    vec![]
+}
+
+
+// third rules for method onle if param is &self then output param lifetime will be that of &self.
+
+
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
 
 fn largest<T>(list: &[T]) -> &T {
     let mut largest = &list[0];
