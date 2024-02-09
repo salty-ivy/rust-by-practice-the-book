@@ -1,13 +1,12 @@
-// Field struct 
+// Field struct
 
-#[derive(Debug)]  // this is to use Debug function which helps us to print the User instance or we can impl Debug method
-struct User{
+#[derive(Debug)] // this is to use Debug function which helps us to print the User instance or we can impl Debug method
+struct User {
     active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
 }
-
 
 #[derive(Debug)]
 struct Rectangle {
@@ -17,13 +16,15 @@ struct Rectangle {
 
 // associating a method to the Rectangle type via implementation
 
-impl Rectangle { // each type uses multiple impl blocks
-    fn area(&self) -> u32 { // &self is shorthand for self: &Self, which Self -> represents type written after impl
+impl Rectangle {
+    // each type uses multiple impl blocks
+    fn area(&self) -> u32 {
+        // &self is shorthand for self: &Self, which Self -> represents type written after impl
         self.width * self.height
     }
 
     fn perimeter(&self) -> u32 {
-        2*(self.width + self.height)
+        2 * (self.width + self.height)
     }
 
     // associated functions which do not take &self ( static methods or class methods ) and called like ::  eg: String::from("something")
@@ -35,7 +36,6 @@ impl Rectangle { // each type uses multiple impl blocks
     }
 }
 
-
 // Tuple struct
 struct Color(i32, i32, i32);
 
@@ -43,9 +43,9 @@ struct Color(i32, i32, i32);
 
 struct AlwaysEqual;
 
-
 fn main() {
-    let user1 = User{ // if let mut the values can be updated.
+    let user1 = User {
+        // if let mut the values can be updated.
         active: true,
         username: String::from("soanso"),
         email: String::from("test@example.com"),
@@ -58,10 +58,10 @@ fn main() {
         ..user1
     };
 
-    let _black = Color(0,0,0);
+    let color = Color(0, 0, 0);
+    let _black = color;
 
     let _subject = AlwaysEqual;
-
 
     let rect1 = Rectangle {
         width: 20,
@@ -77,10 +77,15 @@ fn main() {
 
     // User can also be return type of a function
 
-    println!("{}, {}, {}, {}", user1.active, user1.username, user1.email, user1.sign_in_count);
-    println!("{}, {}, {}, {}", user2.active, user2.username, user2.email, user2.sign_in_count);
+    println!(
+        "{}, {}, {}, {}",
+        user1.active, user1.username, user1.email, user1.sign_in_count
+    );
+    println!(
+        "{}, {}, {}, {}",
+        user2.active, user2.username, user2.email, user2.sign_in_count
+    );
 
-    println!("{:?}", user1);  // using debug output format
+    println!("{:?}", user1); // using debug output format
     dbg!(user2); // dbg! macro takes the ownership and writes the output in stderr also prints file and line number
 }
-
